@@ -13,6 +13,63 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+	<style type="text/css">
+	/* adapted from http://www.w3schools.com/howto/howto_css_switch.asp */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+	</style>
   </head>
   <body>
 	
@@ -44,6 +101,16 @@
 			  <li class="list-group-item">Morbi leo risus</li>
 			  <li class="list-group-item">Porta ac consectetur ac</li>
 			  <li class="list-group-item">Vestibulum at eros</li>
+			  <li class="list-group-item">
+				<label class="switch">
+				  <input type="checkbox" id="delivery">
+				  <div class="slider round"></div>
+				</label>
+				Delivery
+			  </li>
+			  <li class="list-group-item">
+				<input type="text" id="phoneNr" placeholder="Phone number">
+			  </li>
 		  </ul>
 		  <input type="text" class="form-control" name="itemsList" id="itemsList" placeholder="Items">
 		  <button type="submit" id="submit" class="btn btn-primary">Submit</button>
@@ -62,14 +129,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" ></script>
   
 	<script>
+	// Global variables for price of cart, and items in cart
 	var price = 0.00;
 	var items = [];
+		// Send out a post request to add an order to DB when Submit clicked
 		$("#submit").click(function(e) {
 			e.preventDefault();
 			/*$.post("/order",{price: $("#price").val(), items: $("#itemsList").val()}, function(data, status){
 				console.log(data, status);
 			});*/
 			
+			// Divide the items array into one string (CSV)
 			var listItems = "";
 			for (i = 0; i<items.length; i++){
 				if (listItems != ""){
@@ -77,12 +147,15 @@
 				}
 				listItems += items[i];
 			}
+			// Asynchronous post request
 			$.ajax({
 				type: "POST",
 				url: "/order",
 				data: {
 					price: price,
-					items: listItems
+					items: listItems,
+					delivery : document.getElementById("delivery").checked,
+					phoneNr : $("#phoneNr").val()
 				},
 				success: function(response){
 					$("#serveroutput").text("Success");
@@ -95,6 +168,7 @@
 			//$("#price").clear();
 			//$("#itemsList").clear();
 		});
+		// Add price and item to cart when "+" clicked next to food
 		$("#addBurger").click(function(e) {
 			price += 5.99;
 			items.push("Burger");

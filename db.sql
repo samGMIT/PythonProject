@@ -14,6 +14,10 @@ Create Table Orders
 	id Int(8) unsigned auto_increment,
     items varchar(252) not null,
 	price Float(10) not null,
+	delivery boolean not null,
+	timeOfOrder varchar(20) not null,
+	address varchar(252),
+	phoneNr Int(12) not null,
 	Primary key (id)
 ) engine = INNODB;
 
