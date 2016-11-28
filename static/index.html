@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<!-- Author: Ian McLoughlin -->
+<!-- Date: October 10th, 2016 -->
+<!-- Originally adapted from: http://v4-alpha.getbootstrap.com/getting-started/introduction/ -->
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+  </head>
+  <body>
+	
+	<!-- https://v4-alpha.getbootstrap.com/components/navbar/ -->
+	<nav class="navbar navbar-dark bg-inverse">
+		<div class="container">
+    	<a class="navbar-brand" href="#">Permutations</a>
+		<h3 color="white" id="shoppingCartPrice"></h3>
+		</div>
+	</nav>
+
+	<div class="container">
+		<br />
+		<!-- Adapted from: http://v4-alpha.getbootstrap.com/components/forms/#textual-inputs -->
+		<form id="orderForm">
+		  <ul class="list-group">
+			  <li class="list-group-item">
+				  <button type="button" class="btn btn-default" id="addPizza">
+					+
+				  </button>
+				Large pizza
+			  </li>
+			  <li class="list-group-item">
+				  <button type="button" class="btn btn-default" id="addBurger">
+					+
+				  </button>
+				Burger
+			  </li>
+			  <li class="list-group-item">Morbi leo risus</li>
+			  <li class="list-group-item">Porta ac consectetur ac</li>
+			  <li class="list-group-item">Vestibulum at eros</li>
+		  </ul>
+		  <input type="text" class="form-control" name="itemsList" id="itemsList" placeholder="Items">
+		  <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<br />
+		<form>
+		  <div class="form-group">
+			<label for="serveroutput">Order placement result</label>
+			<textarea class="form-control" id="serveroutput" rows="10" placeholder="Please submit an input above."  readonly></textarea>
+		</form>
+	</div>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" ></script>
+  
+	<script>
+	var price = 0.00;
+	var items = [];
+		$("#submit").click(function(e) {
+			e.preventDefault();
+			/*$.post("/order",{price: $("#price").val(), items: $("#itemsList").val()}, function(data, status){
+				console.log(data, status);
+			});*/
+			
+			var listItems = "";
+			for (i = 0; i<items.length; i++){
+				if (listItems != ""){
+					listItems += ",";
+				}
+				listItems += items[i];
+			}
+			$.ajax({
+				type: "POST",
+				url: "/order",
+				data: {
+					price: price,
+					items: listItems
+				},
+				success: function(response){
+					$("#serveroutput").text("Success");
+				},
+				error: function(response){
+					$("#serveroutput").text("Failure");
+				}
+			});
+			
+			//$("#price").clear();
+			//$("#itemsList").clear();
+		});
+		$("#addBurger").click(function(e) {
+			price += 5.99;
+			items.push("Burger");
+			document.getElementById("shoppingCartPrice").innerText = price;
+			console.log(price, items);
+		});
+		$("#addPizza").click(function(e) {
+			price += 12.99;
+			items.push("Pizza");
+			document.getElementById("shoppingCartPrice").innerText = price;
+			console.log(price, items);
+		});
+	</script>
+  </body>
+</html>
