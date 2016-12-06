@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-	
 		<!-- Required meta tags always come first -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,20 +21,18 @@
 	<body>
 		<div class="headerWrapper">
 			<div class="header">
-				<div class="logo">learn to use 
-					<span class="jQueryOrange">jQuery UI widgets</span>
-				</div>
+				<div class="logo">learn to use <span class="jQueryOrange">jQuery UI widgets</span></div>
 			</div>
 		</div>
 		<div class="menuWrapper">
 			<div class="menu">
-				<div class="menuItem selected">
+				<div class="menuItem">
 					<a href="">Home</a>
 				</div>
 				<div class="menuItem">
 					<a href="about">About</a>
 				</div>
-				<div class="menuItem">
+				<div class="menuItem selected">
 					<a href="favorites">Favorites</a>
 				</div>
 				<div class="menuItem last">
@@ -46,42 +43,44 @@
 		</div>
 		<div class="contentWrapper">
 			<div class="content">
-				 <h1>So many things to say...</h1>
-				 <div>
-					 <textarea id="blogpost">
-					 </textarea>
-				 </div>
-				 <input type="text" id="name" placeholder="Name">
-				 <button id="postBlog">Post</button>
-			</div>
+			 <h1>Favorites</h1>
+			<ul>
+				<li><h3>Foods</h3>
+					<ul>
+						<li><a href="http://en.wikipedia.org/wiki/Ice_cream">Ice Cream</a></li>
+						<li><a href="http://en.wikipedia.org/wiki/Chocolate">Chocolate</a></li>
+						<li><a href="http://en.wikipedia.org/wiki/Asparagus">Asparagus</a></li>
+					</ul>
+				</li>
+				<li><h3>Internet Things</h3>
+					<ul>
+						<li><a href="https://duckduckgo.com/">DuckDuckGo</a></li>
+						<li><a href="http://www.reddit.com/">Reddit</a></li>
+						<li><a href="http://www.wikipedia.org/">Wikipedia</a></li>
+						<li><a href="http://www.hyperboleandahalf.blogspot.com/">hyperbole and a half</a></li>
+					</ul>
+				</li>
+				<li><h3>This Site</h3>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="favorites.html">Favorites</a></li>
+						<li><a href="contact.html">Contact</a></li>
+					</ul>
+				</li>
+				<li><h3>Not my FAQs</h3>
+					<ul>
+						<li><a href="http://www.reddit.com/wiki/faq">Reddit FAQ</a></li>
+						<li><a href="http://www.faqs.org/faqs/">About FAQs that aren't mine</a></li>
+						<li><a href="http://www.mspaintadventures.com/?faqs=science">This is weird</a></li>
+					</ul>
+				</li>	
+			</ul>
 		</div>
 		<div class="footerWrapper">
 			<div class="footer">
-			&copy;  
+			&copy; 2013 Marie Taylor 
 			</div>
 		</div>
-		<script type="text/javascript">
-			$("#postBlog").click(function(){
-				if($("#blogpost").val() == null){
-					console.log("Nothing to post");
-				}else{
-					// Asynchronous post request
-					$.ajax({
-						type: "POST",
-						url: "/submit",
-						data: {
-							name: $("#name").val(),
-							text: $("#blogpost").val()
-						},
-						success: function(response){
-							console.log("Blog posted");
-						},
-						error: function(response){
-							console.log("Blog post failed");
-						}
-					});
-				}
-			});
-		</script>
 	</body>
 </html>

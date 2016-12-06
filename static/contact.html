@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
-	
 		<!-- Required meta tags always come first -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,14 +21,12 @@
 	<body>
 		<div class="headerWrapper">
 			<div class="header">
-				<div class="logo">learn to use 
-					<span class="jQueryOrange">jQuery UI widgets</span>
-				</div>
+				<div class="logo">learn to use <span class="jQueryOrange">jQuery UI widgets</span></div>
 			</div>
 		</div>
 		<div class="menuWrapper">
 			<div class="menu">
-				<div class="menuItem selected">
+				<div class="menuItem">
 					<a href="">Home</a>
 				</div>
 				<div class="menuItem">
@@ -38,7 +35,7 @@
 				<div class="menuItem">
 					<a href="favorites">Favorites</a>
 				</div>
-				<div class="menuItem last">
+				<div class="menuItem last selected">
 					<a href="contact">Contact</a>
 				</div>
 				<div class="clear"></div>
@@ -46,42 +43,33 @@
 		</div>
 		<div class="contentWrapper">
 			<div class="content">
-				 <h1>So many things to say...</h1>
-				 <div>
-					 <textarea id="blogpost">
-					 </textarea>
-				 </div>
-				 <input type="text" id="name" placeholder="Name">
-				 <button id="postBlog">Post</button>
+				<form>
+					<h1>Contact Me:</h1>
+					<div class="fieldWrap">
+						Your first name: <input type="text" id="txtFirstName" name="txtFirstName" />
+					</div>
+					<div class="fieldWrap">
+						Your last name: <input type="text" id="txtLastName" name="txtLastName" />
+					</div>
+					<div class="fieldWrap">
+						What do you want? 
+						<div>
+							<textarea cols="20" rows="5" id="txtDate" name="txtDescription"></textarea>
+						</div>
+					</div>
+					<div class="fieldWrap">
+						What day should I get back to you by? <input type="text" id="txtDate" name="txtDescription" /> (like '01/12/2013')
+					</div>
+					<div class="fieldWrap">
+						<input type="submit" id="btnSubmit" value="Submit!" />
+					</div>
+				</form>
 			</div>
 		</div>
 		<div class="footerWrapper">
 			<div class="footer">
-			&copy;  
+			&copy; 2013 Marie Taylor 
 			</div>
 		</div>
-		<script type="text/javascript">
-			$("#postBlog").click(function(){
-				if($("#blogpost").val() == null){
-					console.log("Nothing to post");
-				}else{
-					// Asynchronous post request
-					$.ajax({
-						type: "POST",
-						url: "/submit",
-						data: {
-							name: $("#name").val(),
-							text: $("#blogpost").val()
-						},
-						success: function(response){
-							console.log("Blog posted");
-						},
-						error: function(response){
-							console.log("Blog post failed");
-						}
-					});
-				}
-			});
-		</script>
 	</body>
 </html>

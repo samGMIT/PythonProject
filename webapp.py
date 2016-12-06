@@ -15,15 +15,11 @@ app = Flask(__name__)
 def root():
     return app.send_static_file('index.html')
 
-@app.route("/order", methods=['POST'])
+@app.route("/submit", methods=['POST'])
 def order():
 	# Get the form values out of the post request
-	price = request.form.get('price')
-	items = request.form.get('items')
-	delivery = request.form.get('delivery')
-	time = request.form.get('time')
-	address = request.form.get('address')
-	phoneNr = request.form.get('phoneNr')
+	name = request.form.get('name')
+	text = request.form.get('text')
 	
 	# Connection variable used to put stuff into DB
 	# adapted from http://stackoverflow.com/questions/372885/how-do-i-connect-to-a-mysql-database-in-python
@@ -36,23 +32,18 @@ def order():
 	cur = conn.cursor()
 	
 	# Try to add order to DB and catch exceptions
-	cur.execute("INSERT INTO orders VALUES(NULL, '" + items + "', '" + price + "', '" + delivery + "', '" + time + "', '" + address + "', '" + phoneNr + "')")
+	cur.execute("INSERT INTO blogposts VALUES(NULL, '" + name + "', '" + text + "')")
 	
 	# Close the cursor and collection to stop any memory leaks
 	cur.close()
 	conn.close()
 	
 	# Default return for method
-	return "success"
+	return "Success"
 	
-@app.route("/booking", methods=['POST'])
+@app.route("/getPosts", methods=['GET'])
 def booking():
 	# Get the form values out of the post request
-	numOfPeople = request.form.get('numOfPeople')
-	orderDate = request.form.get('orderDate')
-	bookedDate = request.form.get('bookedDate')
-	phoneNr = request.form.get('phoneNr')
-	name = request.form.get('name')
 	
 	# Connection variable used to put stuff into DB
 	# adapted from http://stackoverflow.com/questions/372885/how-do-i-connect-to-a-mysql-database-in-python
@@ -65,7 +56,7 @@ def booking():
 	cur = conn.cursor()
 	
 	# Try to add order to DB and catch exceptions
-	cur.execute("INSERT INTO bookings VALUES(NULL, '" + numPeople + "', '" + orderDate + "', '" + bookingDate + "', '" + phoneNr + "', '" + name + "')")
+	cur.execute("Select * from blogposts")
 	
 	# Close the cursor and collection to stop any memory leaks
 	cur.close()
@@ -73,6 +64,18 @@ def booking():
 	
 	# Default return for method
 	return "success"
+
+@app.route("/about", methods=['GET'])
+def about():
+	return app.send_static_file('about.html')
+
+@app.route("/favorites", methods=['GET'])
+def favorites():
+	return app.send_static_file('favorites.html')
+
+@app.route("/contact", methods=['GET'])
+def contact():
+	return app.send_static_file('contact.html')
 
 if __name__ == "__main__":
     app.run(port=8080) # Run project on localhost:8080

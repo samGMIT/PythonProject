@@ -9,25 +9,10 @@ Use datarep;
 -- Foreign key columns and Primary key column must be exactly the same
 
 -- RESTRICT Rejects the delete or update operation for the parent table
-Create Table Orders
+Create Table Blogposts
 (
 	id Int(8) unsigned auto_increment,
-    items varchar(252) not null,
-	price Float(10) not null,
-	delivery boolean not null,
-	timeOfOrder varchar(20) not null,
-	address varchar(252),
-	phoneNr Int(12) not null,
+    name varchar(30),
+	blogtext varchar(255) not null,
 	Primary key (id)
-) engine = INNODB;
-
-Create Table Bookings
-(
-    id Int(8) unsigned auto_increment,
-	numPeople Int(2) not null,
-    orderDate date not null,
-    bookedDate date not null,
-    phoneNr Int(12) not null,
-    name varchar(64) not null,
-    Primary key (id)
 ) engine = INNODB;
